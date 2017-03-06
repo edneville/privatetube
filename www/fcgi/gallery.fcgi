@@ -38,13 +38,14 @@ sub main {
 
 	if( defined( $limit ) && $limit ne "" ) {
 		my $num = 0;
+		$limit = lc($limit);
 		foreach( @lines ) {
 			my @parts = split( /\0/, $_ );
-			$num++;
 
-			if( $parts[0] =~ /$limit/ ) {
+			if( $parts[0] =~ /$limit/i ) {
 				push( @rands, $num );
 			}
+			$num++;
 		}
 	}
 	else {

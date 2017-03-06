@@ -120,7 +120,9 @@ function limit_button( limit ) {
 	}
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById('nav').innerHTML = this.responseText;
+			clear_thumbs();
+			topic_buttons();
+			document.getElementById('nav').innerHTML += this.responseText;
 		}
 	};
 
@@ -151,8 +153,33 @@ function set_player_data( video_url ) {
 	document.getElementById('wrap').innerHTML += '<video controls><source src="' + video_url + '" type="video/mp4">Your browser does not support the video tag.</video><br />';
 }
 
+function clear_thumbs() {
+	document.getElementById('nav').innerHTML = '';
+}
+
+function topic_buttons() {
+	var h = new Object();
+
+	h['youtube/twentytrucks'] = 'Trucks';
+	h['digger']               = 'Diggers';
+	h['veritasium']           = 'Veritasium';
+	h['hooplakidzlab']        = 'HooplakidzLab';
+
+	for( var k in h ) {
+		if( h.hasOwnProperty( k ) ) {
+			document.getElementById('nav').innerHTML += '<button onclick="limit_button(\'' + k + '\')">' + h[k] + '</button><br>\n';
+		}
+	}
+}
+
 function reload_page() {
 	location.reload();
+}
+
+function startup() {
+	clear_thumbs();
+	topic_buttons();
+	get_data();
 }
 
 window.onscroll = yHandler;
@@ -162,7 +189,7 @@ EOT
 		-script => $script,
 		-title  => 'Ben YouTube',
 		-style  => { -code => $style },
-		-onLoad => "javascript:get_data();",
+		-onLoad => "javascript:startup();",
 	);
 
 	my ($video) = $q->param( "video" );
@@ -173,7 +200,7 @@ EOT
 	print '<header><a name="top"></a><h1>nevtube</h1></header>' . "\n";
 
 	print "<nav class=\"nav\" id=\"nav\"><ul>\n";
-	print "<button onclick=\"limit_button('youtube/twentytrucks')\">Trucks</button>\n";
+	
 	print "</ul></nav>\n";
 	
 	print "<article class=\"article\" id=\"wrap\">\n";

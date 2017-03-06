@@ -1,0 +1,58 @@
+
+What is this
+
+        The idea behind this is to present the user with a very simple 
+        interface for browsing .mp4 files which can be played by an HTML5 web 
+        browser natively through the <video> tags.
+
+        The backend (database) for this is a plain text file with 
+        null-separated values.
+
+        Thumbnails are pre-generated using a script.
+
+        If you have a really large database of vidoes and fell that a database 
+        is really required then please let me know or send a pull request as 
+        I've not seen a situation where that volume of video data fits on my 
+        NAS.
+
+Ok I'm sold, how do I setup the web server
+
+        Firstly you will need to set up your web server. The only requirement 
+        is Perl/FCGI, to do this with Apache you might use something similar to 
+        the following:
+
+        <Location /www/fcgi>
+                AddHandler fcgid-script .fcgi
+                Options +ExecCGI
+        </Location>
+
+        RewriteEngine On
+        RewriteRule ^/$ /www/fcgi/index.fcgi [R=301]
+
+        RewriteRule ^/img/(.*) /www/img/$1   [QSA]
+
+How to I make the thumbnail data
+
+        1. If your source files are not in .mp4 format, convert them first, 
+           using the script 'convert_mp4'
+
+        find . -type f -name '*.mpeg' | convert_mp4
+
+        2. Take an image from the middle of the file as the reference
+
+        find . -type f -name '*.mp4' | middle_thumbnail
+
+        3. Down size the images
+
+        find . -type f -name '*.png' | thumbnail_maker
+
+        The paths in the output need to be formed from the perspective of the 
+        www root, so that when the images/video files are referenced they will 
+        be retrievable from the user browser.
+
+        ( cd /mnt/nas && find www/img/thumbnails -type f ) \
+        | sh thumbnail_maker \
+        > ../data
+
+
+vim: set fo+=ocqnwa et ts=8 sw=8:

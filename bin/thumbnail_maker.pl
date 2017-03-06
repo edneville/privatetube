@@ -22,7 +22,7 @@ sub main {
 		my ($x, $y, $data) = imgsize( "${thumbs}/${line}" );
 		my ($film) = $wwwpath =~ m|^(.*)_200\.png$|;
 
-		$film .= ".mp4";
+		#$film .= ".mp4";
 		print "$line\0$wwwpath\0$film\0$x\0$y\n";
 	}
 }
