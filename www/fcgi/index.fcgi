@@ -150,7 +150,7 @@ function yHandler() {
 }
 
 function set_player_data( video_url ) {
-	document.getElementById('wrap').innerHTML += '<video controls><source src="' + video_url + '" type="video/mp4">Your browser does not support the video tag.</video><br />';
+	document.getElementById('wrap').innerHTML = '<video controls><source src="' + video_url + '" type="video/mp4">Your browser does not support the video tag.</video><br />';
 }
 
 function clear_thumbs() {
@@ -167,9 +167,10 @@ function topic_buttons() {
 
 	for( var k in h ) {
 		if( h.hasOwnProperty( k ) ) {
-			document.getElementById('nav').innerHTML += '<button onclick="limit_button(\'' + k + '\')">' + h[k] + '</button><br>\n';
+			document.getElementById('nav').innerHTML += '<button onclick="limit_button(\'' + k + '\')">' + h[k] + '</button><br><br>\n';
 		}
 	}
+	document.getElementById('nav').innerHTML += '<br/>\n';
 }
 
 function reload_page() {
