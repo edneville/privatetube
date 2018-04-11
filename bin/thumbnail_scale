@@ -1,7 +1,0 @@
-#!/bin/sh
-
-while read filename; do
-	N=`echo ${filename}|sed -e 's/.png$/_200.png/g'`
-	convert "${filename}" -resize 200x "${N}"
-done
-

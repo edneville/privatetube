@@ -1,0 +1,8 @@
+RewriteEngine on
+
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^ /cgi-bin/index.fcgi [L]
+
+RewriteCond %{REQUEST_URI} ^/thumb$
+RewriteRule ^ /cgi-bin/display_thumb.fcgi [L]
+

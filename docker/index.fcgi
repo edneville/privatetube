@@ -10,10 +10,11 @@ use Data::Dumper;
 # use:
 # https://www.w3schools.com/css/tryit.asp?filename=trycss_position_fixed
 
+require( "/usr/local/data/media_common.inc" );
+
 local our $q;
 my $request = FCGI::Request();
 
-my $base   = "/pool0";
 my $target = 300;
 
 sub video_player {
@@ -101,10 +102,9 @@ function get_data() {
 	};
 
 	var lines      = document.getElementById('nav').innerHTML.split( '\n' );
-	var parameters = "count=";
-	parameters    += lines.length;
+	var parameters = "query=.";
 
-	xmlhttp.open( "POST", "/www/fcgi/gallery.fcgi", true );
+	xmlhttp.open( "POST", "/cgi-bin/search.fcgi", true );
 	xmlhttp.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" )
 	xmlhttp.send( parameters )
 }
@@ -126,10 +126,10 @@ function limit_button( limit ) {
 		}
 	};
 
-	var parameters = "limit=";
+	var parameters = "query=";
 	parameters    += limit;
 
-	xmlhttp.open( "POST", "/www/fcgi/gallery.fcgi", true );
+	xmlhttp.open( "POST", "/cgi-bin/search.fcgi", true );
 	xmlhttp.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" )
 	xmlhttp.send( parameters )
 }
@@ -162,8 +162,16 @@ function topic_buttons() {
 
 	h['youtube/twentytrucks'] = 'Trucks';
 	h['digger']               = 'Diggers';
+	h['do_you_know']          = 'Do You Know';
 	h['veritasium']           = 'Veritasium';
 	h['hooplakidzlab']        = 'HooplakidzLab';
+	h['bing']                 = 'Bing';
+	h['universal']            = 'Films';
+	h['numberjacks']          = 'Numberjacks';
+	h['floogals']             = 'Floogals';
+	h['paw_patrol']           = 'Paw Patrol';
+	h['rusty_rivets']         = 'Rusty Rivets';
+	h['PJ_Masks']             = 'PJ Masks';
 
 	for( var k in h ) {
 		if( h.hasOwnProperty( k ) ) {
